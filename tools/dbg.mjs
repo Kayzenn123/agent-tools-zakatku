@@ -1,0 +1,22 @@
+import { chromium } from 'playwright';
+const browser = await chromium.launch();
+const page = await browser.newPage({ viewport: { width: 390, height: 844 } });
+page.on('pageerror', e => console.log('PAGEERROR:', e.message.split('\n')[0]));
+page.on('console', m => { if (m.type() === 'error') console.log('CONSOLE:', m.text().slice(0,120)); });
+await page.goto('http://localhost:8931/?tab=fitrah&jiwa=2&beras_harga=15000', { waitUntil: 'networkidle' });
+await page.waitForTimeout(2500);
+console.log('resi-fitrah count:', await page.locator('#resi-fitrah .resi').count());
+console.log('lembar-fitrah hidden:', await page.locator('#lembar-fitrah').getAttribute('hidden'));
+console.log('tab-fitrah selected:', await page.locator('#tab-fitrah').getAttribute('aria-selected'));
+console.log('url:', page.url());
+// riwayat debug
+await page.goto('http://localhost:8931/', { waitUntil: 'networkidle' });
+await page.click('[data-contoh="mal"]');
+await page.click('form[data-form="mal"] button[type="submit"]');
+await page.waitForSelector('#resi-mal .resi');
+await page.click('#tab-riwayat');
+await page.waitForTimeout(600);
+console.log('arsip items:', await page.locator('#arsip-list .arsip-item').count());
+console.log('arsip html len:', (await page.locator('#arsip-list').innerHTML()).length);
+console.log('lembar-riwayat hidden:', await page.locator('#lembar-riwayat').getAttribute('hidden'));
+await browser.close();

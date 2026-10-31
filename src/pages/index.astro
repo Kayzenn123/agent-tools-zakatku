@@ -1,0 +1,265 @@
+---
+import { Font } from 'astro:assets';
+import { Icon } from 'astro-icon/components';
+import '../styles/zakatku.css';
+
+const site = 'https://kayzenn123.github.io/agent-tools-zakatku/';
+const title = 'ZakatKu — Kalkulator Zakat Mal, Penghasilan & Fitrah';
+const desc = 'Hitung zakat mal, zakat penghasilan, dan zakat fitrah dalam Bahasa Indonesia. Nisab otomatis, resi bisa disobek & dibagikan. 100% di browser, tanpa daftar.';
+---
+
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+    <title>{title}</title>
+    <meta name="description" content={desc} />
+    <meta name="theme-color" content="#efe8fb" />
+    <link rel="canonical" href={site} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="ZakatKu" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={site} />
+    <meta property="og:image" content={site + 'og-image.png'} />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={desc} />
+    <meta name="twitter:image" content={site + 'og-image.png'} />
+    <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect x='6' y='6' width='52' height='52' fill='none' stroke='%23331a5e' stroke-width='5'/%3E%3Ctext x='32' y='42' font-family='sans-serif' font-weight='900' font-size='24' text-anchor='middle' fill='%23331a5e'%3EZK%3C/text%3E%3C/svg%3E" />
+    <Font cssVariable="--font-bangers" preload />
+    <Font cssVariable="--font-cossette" preload />
+    <Font cssVariable="--font-bigshoulders" />
+  </head>
+  <body class="has-vmq">
+    <a class="skip" href="#lembar-wrap">Lompat ke kalkulator</a>
+
+    <div class="vmq left" aria-hidden="true"><div class="vmq-track" id="vmq-l"></div></div>
+    <div class="vmq right" aria-hidden="true"><div class="vmq-track" id="vmq-r"></div></div>
+    <p class="sr-only">Teks berjalan di tepi layar: Zakat Mal, kadar 2,5 persen, nisab 85 gram emas, haul satu tahun, zakat fitrah 2,5 kilogram beras.</p>
+
+    <header class="arsip-head">
+      <div class="wrap">
+        <a class="brand" href="./" aria-label="ZakatKu — beranda">
+          <span class="cap" aria-hidden="true">ZK</span><b>ZakatKu</b>
+        </a>
+        <div class="head-tools">
+          <button id="mq-toggle" class="btn" aria-pressed="false">
+            <Icon name="tabler:player-pause" aria-hidden="true" /><span class="lbl">Jeda</span><span class="sr-only"> teks berjalan</span>
+          </button>
+          <button id="motion-toggle" class="btn" aria-pressed="true">
+            <Icon name="tabler:wind" aria-hidden="true" /><span class="lbl">Gerak: Nyala</span>
+          </button>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <section class="hero" aria-labelledby="judul">
+        <div class="px-layer" data-depth="0.06" aria-hidden="true"></div>
+        <div id="senter" aria-hidden="true"></div>
+        <div class="wrap">
+          <span class="kicker" data-wght data-depth="0.03">Kantor pos zakat — buka tiap hari</span>
+          <h1 id="judul" data-split data-depth="0.1">HITUNG ZAKATMU, BOS.</h1>
+          <p class="sub" data-depth="0.14">
+            Pak Pos bantu hitung <strong>zakat mal, zakat penghasilan, dan zakat fitrah</strong>
+            pakai Bahasa Indonesia yang gampang. Isi buku besar di bawah, tekan cap,
+            resinya keluar lengkap dengan status <strong>wajib atau belum</strong>.
+            Semua dihitung di browser-mu — tidak ada data yang dikirim ke mana-mana.
+          </p>
+          <div class="stamp-strip" data-depth="0.08" aria-label="Angka kunci zakat">
+            <div class="stamp-cell">Kadar <b>2,5%</b></div>
+            <div class="stamp-cell">Nisab <b>85 g</b> emas</div>
+            <div class="stamp-cell">Haul <b>1 thn</b></div>
+            <div class="stamp-cell">Fitrah <b>2,5 kg</b></div>
+          </div>
+        </div>
+        <aside class="kartupos" data-depth="0.16" aria-hidden="true">
+          <div class="kp-card">
+            <div class="kp-stamps"><i></i><i></i><i></i></div>
+            <p class="kp-big">2,5%</p>
+            <p class="kp-cap">kadar zakat<br />mal &amp; penghasilan</p>
+            <div class="kp-garis"><i></i><i></i><i></i></div>
+          </div>
+          <div class="kp-card kp-kecil">
+            <p class="kp-big">85 g</p>
+            <p class="kp-cap">nisab<br />emas</p>
+          </div>
+        </aside>
+      </section>
+
+      <div class="wrap">
+        <nav class="lembar-nav" role="tablist" aria-label="Lembar arsip zakat">
+          <button role="tab" id="tab-mal" aria-selected="true" aria-controls="lembar-mal" data-tab="mal">
+            <Icon name="tabler:calculator" aria-hidden="true" /> Zakat Mal
+          </button>
+          <button role="tab" id="tab-gaji" aria-selected="false" aria-controls="lembar-gaji" data-tab="gaji" tabindex="-1">
+            <Icon name="tabler:wallet" aria-hidden="true" /> Penghasilan
+          </button>
+          <button role="tab" id="tab-fitrah" aria-selected="false" aria-controls="lembar-fitrah" data-tab="fitrah" tabindex="-1">
+            <Icon name="tabler:shopping-bag" aria-hidden="true" /> Fitrah
+          </button>
+          <button role="tab" id="tab-riwayat" aria-selected="false" aria-controls="lembar-riwayat" data-tab="riwayat" tabindex="-1">
+            <Icon name="tabler:archive" aria-hidden="true" /> Riwayat
+          </button>
+        </nav>
+
+        <div id="lembar-wrap">
+          <!-- ============ ZAKAT MAL ============ -->
+          <section class="lembar" id="lembar-mal" role="tabpanel" aria-labelledby="tab-mal" data-reveal data-jenis="mal">
+            <h2>Lembar 01 — Zakat Mal</h2>
+            <p class="desc">Catat semua harta yang sudah <b>dimiliki penuh</b> dan <b>berkembang</b>.
+              Nisab = <code>85 × harga emas/gram</code>. Centang haul kalau hartamu sudah bertahan 1 tahun.</p>
+            <form data-form="mal" novalidate>
+              <table class="buku">
+                <caption>Buku besar harta — isi dengan angka rupiah, tanpa titik</caption>
+                <thead><tr><th scope="col">Pos harta</th><th scope="col">Jumlah</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Tabungan, giro, deposito<span class="ket">Uang tunai &amp; simpanan bank</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="tabungan" inputmode="numeric" autocomplete="off" aria-label="Tabungan, giro, deposito dalam rupiah" placeholder="0" /></div></td></tr>
+                  <tr><th scope="row">Emas<span class="ket">Berat dalam gram</span></th>
+                    <td class="num"><div class="field"><input class="angka" name="emas_g" inputmode="decimal" autocomplete="off" aria-label="Berat emas dalam gram" placeholder="0" /><span class="rp" aria-hidden="true">g</span></div></td></tr>
+                  <tr><th scope="row">Harga emas per gram<span class="ket">Cek harga hari ini di toko emas langgananmu</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="emas_harga" inputmode="numeric" autocomplete="off" aria-label="Harga emas per gram dalam rupiah, wajib diisi" placeholder="mis. 1500000" required /></div></td></tr>
+                  <tr><th scope="row">Perak<span class="ket">Opsional — berat gram</span></th>
+                    <td class="num"><div class="field"><input class="angka" name="perak_g" inputmode="decimal" autocomplete="off" aria-label="Berat perak dalam gram" placeholder="0" /><span class="rp" aria-hidden="true">g</span></div></td></tr>
+                  <tr><th scope="row">Harga perak per gram<span class="ket">Opsional</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="perak_harga" inputmode="numeric" autocomplete="off" aria-label="Harga perak per gram dalam rupiah" placeholder="0" /></div></td></tr>
+                  <tr><th scope="row">Saham &amp; surat berharga<span class="ket">Nilai pasar saat ini</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="saham" inputmode="numeric" autocomplete="off" aria-label="Saham dan surat berharga dalam rupiah" placeholder="0" /></div></td></tr>
+                  <tr><th scope="row">Piutang lancar<span class="ket">Yang diharapkan kembali</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="piutang" inputmode="numeric" autocomplete="off" aria-label="Piutang lancar dalam rupiah" placeholder="0" /></div></td></tr>
+                  <tr><th scope="row">Aset dagang<span class="ket">Stok barang dagangan</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="dagang" inputmode="numeric" autocomplete="off" aria-label="Aset dagang dalam rupiah" placeholder="0" /></div></td></tr>
+                  <tr><th scope="row">Utang jatuh tempo<span class="ket">Dikurangkan dari harta</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="utang" inputmode="numeric" autocomplete="off" aria-label="Utang jatuh tempo dalam rupiah" placeholder="0" /></div></td></tr>
+                </tbody>
+              </table>
+              <p style="margin-block:1rem 0"><label class="haul-check"><input type="checkbox" name="haul" value="1" /> Sudah genap 1 tahun (haul)</label></p>
+              <div class="err-list" data-err aria-live="polite"></div>
+              <div class="aksi">
+                <button type="submit" class="btn btn-primary magnetic"><Icon name="tabler:rubber-stamp" aria-hidden="true" /> Cap sekarang</button>
+                <button type="button" class="btn" data-contoh="mal"><Icon name="tabler:file-plus" aria-hidden="true" /> Isi contoh</button>
+              </div>
+            </form>
+            <div class="resi-zone" id="resi-mal" hidden></div>
+          </section>
+
+          <!-- ============ ZAKAT PENGHASILAN ============ -->
+          <section class="lembar" id="lembar-gaji" role="tabpanel" aria-labelledby="tab-gaji" data-reveal data-jenis="gaji" hidden>
+            <h2>Lembar 02 — Zakat Penghasilan</h2>
+            <p class="desc">Untuk gaji, honor, dan pendapatan rutin. Mengikuti pendapat yang
+              membolehkan zakat penghasilan: nisab disamakan dengan nisab emas
+              (<code>85 × harga emas/gram</code>), kadar <code>2,5%</code>, tanpa menunggu haul.</p>
+            <form data-form="gaji" novalidate>
+              <table class="buku">
+                <caption>Buku besar penghasilan setahun</caption>
+                <thead><tr><th scope="col">Pos</th><th scope="col">Jumlah</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Pendapatan bersih per bulan<span class="ket">Isi angka bersih setelah kebutuhan pokok</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="gaji_bulan" inputmode="numeric" autocomplete="off" aria-label="Pendapatan bersih per bulan dalam rupiah" placeholder="0" /></div></td></tr>
+                  <tr><th scope="row">Bonus / THR setahun<span class="ket">Opsional</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="bonus_tahun" inputmode="numeric" autocomplete="off" aria-label="Bonus atau THR setahun dalam rupiah" placeholder="0" /></div></td></tr>
+                  <tr><th scope="row">Harga emas per gram<span class="ket">Untuk patokan nisab — cek harga hari ini</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="emas_harga" inputmode="numeric" autocomplete="off" aria-label="Harga emas per gram dalam rupiah, wajib diisi" placeholder="mis. 1500000" required /></div></td></tr>
+                </tbody>
+              </table>
+              <div class="err-list" data-err aria-live="polite"></div>
+              <div class="aksi">
+                <button type="submit" class="btn btn-primary magnetic"><Icon name="tabler:rubber-stamp" aria-hidden="true" /> Cap sekarang</button>
+                <button type="button" class="btn" data-contoh="gaji"><Icon name="tabler:file-plus" aria-hidden="true" /> Isi contoh</button>
+              </div>
+            </form>
+            <div class="resi-zone" id="resi-gaji" hidden></div>
+          </section>
+
+          <!-- ============ ZAKAT FITRAH ============ -->
+          <section class="lembar" id="lembar-fitrah" role="tabpanel" aria-labelledby="tab-fitrah" data-reveal data-jenis="fitrah" hidden>
+            <h2>Lembar 03 — Zakat Fitrah</h2>
+            <p class="desc">Wajib untuk tiap jiwa sebelum salat Idulfitri. Kadar: <code>2,5 kg beras</code>
+              (atau makanan pokok) per jiwa, dikonversi ke rupiah.</p>
+            <form data-form="fitrah" novalidate>
+              <table class="buku">
+                <caption>Buku besar jiwa &amp; beras</caption>
+                <thead><tr><th scope="col">Pos</th><th scope="col">Jumlah</th></tr></thead>
+                <tbody>
+                  <tr><th scope="row">Jumlah jiwa<span class="ket">Kamu + tanggungan (pasangan, anak, dst.)</span></th>
+                    <td class="num"><div class="field"><input class="angka" name="jiwa" inputmode="numeric" autocomplete="off" aria-label="Jumlah jiwa, wajib diisi" placeholder="mis. 4" required /><span class="rp" aria-hidden="true">jiwa</span></div></td></tr>
+                  <tr><th scope="row">Harga beras per kg<span class="ket">Harga beras yang biasa kamu makan</span></th>
+                    <td class="num"><div class="field"><span class="rp" aria-hidden="true">Rp</span><input class="angka" name="beras_harga" inputmode="numeric" autocomplete="off" aria-label="Harga beras per kilogram dalam rupiah, wajib diisi" placeholder="mis. 15000" required /></div></td></tr>
+                </tbody>
+              </table>
+              <div class="err-list" data-err aria-live="polite"></div>
+              <div class="aksi">
+                <button type="submit" class="btn btn-primary magnetic"><Icon name="tabler:rubber-stamp" aria-hidden="true" /> Cap sekarang</button>
+                <button type="button" class="btn" data-contoh="fitrah"><Icon name="tabler:file-plus" aria-hidden="true" /> Isi contoh</button>
+              </div>
+            </form>
+            <div class="resi-zone" id="resi-fitrah" hidden></div>
+          </section>
+
+          <!-- ============ RIWAYAT ============ -->
+          <section class="lembar" id="lembar-riwayat" role="tabpanel" aria-labelledby="tab-riwayat" data-reveal data-jenis="riwayat" hidden>
+            <h2>Lembar 04 — Arsip Riwayat</h2>
+            <p class="desc">Semua resi yang pernah kamu cap tersimpan di laci browser ini.
+              Klik <b>muat</b> untuk membuka lagi perhitungannya.</p>
+            <div class="aksi" style="margin-block-start:0">
+              <button class="btn" id="btn-export"><Icon name="tabler:download" aria-hidden="true" /> Unduh JSON</button>
+              <button class="btn" id="btn-clear"><Icon name="tabler:trash" aria-hidden="true" /> Kosongkan laci</button>
+            </div>
+            <ul class="arsip-list" id="arsip-list"></ul>
+          </section>
+        </div>
+
+        <!-- ============ FAQ ============ -->
+        <section aria-labelledby="faq-judul" data-reveal class="bawah-fold" style="margin-block-start:3rem">
+          <h2 id="faq-judul" style="font-size:clamp(2rem,6vw,3rem)">Tanya Pak Pos</h2>
+          <details class="faq">
+            <summary>Gaji bulanan kena zakat? <span class="pm" aria-hidden="true">+</span></summary>
+            <div class="a"><p>Pendapat yang banyak dipakai: ya, kalau total setahun mencapai nisab
+              (85 gram emas). Tidak perlu menunggu haul seperti zakat mal — boleh dibayar tiap bulan
+              atau dirapel setahun, kadarnya tetap 2,5%. Lembar 02 menghitung dengan patokan ini.</p></div>
+          </details>
+          <details class="faq">
+            <summary>Utang mengurangi harta zakat? <span class="pm" aria-hidden="true">+</span></summary>
+            <div class="a"><p>Utang yang <b>jatuh tempo</b> (harus dibayar segera) dikurangkan dulu dari
+              total harta sebelum dibandingkan dengan nisab. Utang jangka panjang yang belum jatuh tempo
+              tidak mengurangi. Kolom "Utang jatuh tempo" di Lembar 01 untuk ini.</p></div>
+          </details>
+          <details class="faq">
+            <summary>Emas perhiasan yang dipakai sehari-hari? <span class="pm" aria-hidden="true">+</span></summary>
+            <div class="a"><p>Mayoritas ulama: perhiasan yang dipakai wajar <b>tidak</b> wajib dizakati.
+              Yang dihitung di sini adalah emas simpanan/investasi (batangan, koin, perhiasan berlebih).
+              Kalau ragu, tanyakan ke ustaz atau amil terdekat.</p></div>
+          </details>
+          <details class="faq">
+            <summary>Zakatnya disalurkan ke siapa? <span class="pm" aria-hidden="true">+</span></summary>
+            <div class="a"><p>Kepada 8 asnaf (fakir, miskin, amil, mualaf, riqab, garim, fisabilillah,
+              ibnu sabil). Paling aman lewat amil zakat resmi (BAZNAS/LAZ) yang berizin —
+              mereka yang menyalurkan dan melaporkannya.</p></div>
+          </details>
+        </section>
+      </div>
+    </main>
+
+    <footer class="cap-pos">
+      <div class="wrap">
+        <p style="max-width:52ch;margin:0">ZakatKu dihitung 100% di browser-mu — tidak ada data yang dikirim ke mana pun.
+          Angka fikih mengikuti pendapat umum; untuk kasus khusus, tanya amil/ustaz terdekat.
+          Dibuat teliti oleh Pak Pos.</p>
+        <button id="capkota" aria-label="Cap kota kantor pos — tekan tiga kali untuk kejutan">POS<br />JKT<br />31·10·26</button>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status"></div>
+    <div class="sr-only" aria-live="polite" id="live"></div>
+
+    <script type="module">
+      import { main } from '../scripts/main.js';
+      main();
+    </script>
+  </body>
+</html>
